@@ -1,0 +1,55 @@
+syntax="proto3";
+
+package wsproto;
+
+option go_package = "github.com/RuNpiXelruN/moq-word-search;wsproto";
+
+import "google/api/annotations.proto";
+
+message SearchItem {
+    string term = 1;
+    int64 search_count = 2;
+}
+
+message SingleWordRequest {
+    string term = 1;
+}
+
+message SingleWordResponse {
+    string message = 1;
+}
+
+message TopFiveRequest {}
+
+message TopFiveResponse {
+    repeated SearchItem top_five = 1;
+}
+
+message UpdateWordListRequest {
+    string term = 1;
+}
+
+message UpdateWordListResponse {
+    string message = 1;
+    repeated SearchItem word_list = 2;
+}
+
+service WordSearch {
+    rpc SingleWordSearch(SingleWordRequest) returns (SingleWordResponse) {
+        option(google.api.http) = {
+            get: "/api/words"
+        };
+    }
+
+    rpc TopFiveSearch(TopFiveRequest) returns (TopFiveResponse) {
+        option(google.api.http) = {
+            get: "/api/words/popular"
+        };
+    }
+
+    rpc UpdateWordList(UpdateWordListRequest) returns (UpdateWordListResponse) {
+        option(google.api.http) = {
+            post: "/api/words"
+        };
+    }
+}

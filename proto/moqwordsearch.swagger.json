@@ -1,0 +1,167 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "proto/moqwordsearch.proto",
+    "version": "version not set"
+  },
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/api/words": {
+      "get": {
+        "operationId": "SingleWordSearch",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/wsprotoSingleWordResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "term",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "WordSearch"
+        ]
+      },
+      "post": {
+        "operationId": "UpdateWordList",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/wsprotoUpdateWordListResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "tags": [
+          "WordSearch"
+        ]
+      }
+    },
+    "/api/words/popular": {
+      "get": {
+        "operationId": "TopFiveSearch",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/wsprotoTopFiveResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "tags": [
+          "WordSearch"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "type_url": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string",
+          "format": "byte"
+        }
+      }
+    },
+    "runtimeError": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "string"
+        },
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    },
+    "wsprotoSearchItem": {
+      "type": "object",
+      "properties": {
+        "term": {
+          "type": "string"
+        },
+        "search_count": {
+          "type": "string",
+          "format": "int64"
+        }
+      }
+    },
+    "wsprotoSingleWordResponse": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string"
+        }
+      }
+    },
+    "wsprotoTopFiveResponse": {
+      "type": "object",
+      "properties": {
+        "top_five": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/wsprotoSearchItem"
+          }
+        }
+      }
+    },
+    "wsprotoUpdateWordListResponse": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string"
+        },
+        "word_list": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/wsprotoSearchItem"
+          }
+        }
+      }
+    }
+  }
+}
