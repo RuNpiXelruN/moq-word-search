@@ -8,6 +8,7 @@ import (
 
 func main() {
 	fmt.Println("hit")
-	wsc := moqwordsearch.NewWordSearchClient()
+	searchItemClient := moqwordsearch.NewSearchItemClient()
+	wsc := moqwordsearch.NewWordSearchClient(searchItemClient)
 	moqwordsearch.Start(wsc)
 }
