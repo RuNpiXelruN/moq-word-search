@@ -49,7 +49,7 @@ service WordSearch {
 
     rpc UpdateWordList(UpdateWordListRequest) returns (UpdateWordListResponse) {
         option(google.api.http) = {
-            post: "/api/words"
+            post: "/api/words/{term}"
         };
     }
 }

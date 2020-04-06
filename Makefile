@@ -7,7 +7,7 @@ binaries: ## Builds binaries for osx, linux, and windows, and places them in the
 	env GOOS=windows GOARCH=amd64 go build -v -o grpcWordSearch_windows && \
 	mv ./*grpcWordSearch* ../bin/
 
-build: mocks test binaries ## Generates interface mocks, runs test suite, and builds binaries for osx, linux, and windows, and places them in the ./bin folder.
+build: test binaries ## Generates interface mocks, runs test suite, and builds binaries for osx, linux, and windows, and places them in the ./bin folder.
 
 buildrun: build run ## Runs tests, builds binaries and runs osx version of binary
 

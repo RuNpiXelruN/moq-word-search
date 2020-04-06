@@ -39,26 +39,6 @@
         "tags": [
           "WordSearch"
         ]
-      },
-      "post": {
-        "operationId": "UpdateWordList",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/wsprotoUpdateWordListResponse"
-            }
-          },
-          "default": {
-            "description": "An unexpected error response",
-            "schema": {
-              "$ref": "#/definitions/runtimeError"
-            }
-          }
-        },
-        "tags": [
-          "WordSearch"
-        ]
       }
     },
     "/api/words/popular": {
@@ -78,6 +58,36 @@
             }
           }
         },
+        "tags": [
+          "WordSearch"
+        ]
+      }
+    },
+    "/api/words/{term}": {
+      "post": {
+        "operationId": "UpdateWordList",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/wsprotoUpdateWordListResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "term",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
         "tags": [
           "WordSearch"
         ]
