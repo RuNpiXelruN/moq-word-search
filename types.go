@@ -6,7 +6,7 @@ import (
 	wsproto "github.com/RuNpiXelruN/moq-word-search/proto"
 )
 
-//go:generate moq -out mocks/mock_wordsearchservice -pkg mocks . WordSearchService
+//go:generate moq -out mocks/mock_wordsearchservice.go -pkg mocks . WordSearchService
 
 // WordSearchService type
 type WordSearchService interface {
@@ -29,7 +29,7 @@ func NewWordSearchClient(sis SearchItemService) *WordSearchClient {
 	}
 }
 
-//go:generate moq -out mocks/mock_searchitemservice -pkg mocks . SearchItemService
+//go:generate moq -out mocks/mock_searchitemservice.go -pkg mocks . SearchItemService
 
 // SearchItemService type
 type SearchItemService interface {

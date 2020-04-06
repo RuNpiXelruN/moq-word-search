@@ -36,13 +36,18 @@ func (sic *SearchItemClient) WordExists(searchTerm string, items []*wsproto.Sear
 // UpdateWordList func
 func (wsc *WordSearchClient) UpdateWordList(ctx context.Context, req *wsproto.UpdateWordListRequest) (*wsproto.UpdateWordListResponse, error) {
 	termRaw := req.Term
+
+	if len(termRaw) == 0 {
+		return nil, errNoTerm
+	}
+
 	term := strings.ToLower(termRaw)
 
-	exists := wsc.searchItemService.WordExists(term, searchList, false)
+	exists := wsc.searchItemService.WordExists(term, SearchList, false)
 	if exists {
 		return &wsproto.UpdateWordListResponse{
 			Message:  fmt.Sprintf("Search term '%v', is already on the list.", termRaw),
-			WordList: searchList,
+			WordList: SearchList,
 		}, nil
 	}
 
@@ -51,21 +56,21 @@ func (wsc *WordSearchClient) UpdateWordList(ctx context.Context, req *wsproto.Up
 		SearchCount: 0,
 	}
 
-	searchList = append(searchList, newSearchItem)
+	SearchList = append(SearchList, newSearchItem)
 
 	return &wsproto.UpdateWordListResponse{
 		Message:  fmt.Sprintf("New search term '%v', has been added to the list :)", termRaw),
-		WordList: searchList,
+		WordList: SearchList,
 	}, nil
 }
 
 // TopFiveSearch func
 func (wsc *WordSearchClient) TopFiveSearch(ctx context.Context, req *wsproto.TopFiveRequest) (*wsproto.TopFiveResponse, error) {
-	sort.Slice(searchList, func(i, j int) bool {
-		return searchList[i].SearchCount > searchList[j].SearchCount
+	sort.Slice(SearchList, func(i, j int) bool {
+		return SearchList[i].SearchCount > SearchList[j].SearchCount
 	})
 
-	topList := searchList[:5]
+	topList := SearchList[:5]
 	return &wsproto.TopFiveResponse{
 		TopFive: topList,
 	}, nil
@@ -82,7 +87,7 @@ func (wsc *WordSearchClient) SingleWordSearch(ctx context.Context, req *wsproto.
 	term := strings.ToLower(termRaw)
 
 	message := fmt.Sprintf("Sorry, '%v' cannot be found.", termRaw)
-	exists := wsc.searchItemService.WordExists(term, searchList, true)
+	exists := wsc.searchItemService.WordExists(term, SearchList, true)
 
 	if exists {
 		message = fmt.Sprintf("Yay, '%v' is one of our words.", termRaw)

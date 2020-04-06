@@ -14,10 +14,12 @@ import (
 )
 
 var wg sync.WaitGroup
-var searchList []*wsproto.SearchItem
+
+// SearchList is the default slice of search terms
+var SearchList []*wsproto.SearchItem
 
 func init() {
-	searchList = []*wsproto.SearchItem{
+	SearchList = []*wsproto.SearchItem{
 		&wsproto.SearchItem{
 			Term:        "hello",
 			SearchCount: 0,
@@ -83,6 +85,7 @@ func (wsc *WordSearchClient) StartGRPC() error {
 	wsproto.RegisterWordSearchServer(grpcServer, wsc)
 
 	grpcServer.Serve(lis)
+
 	return nil
 }
 
@@ -98,6 +101,5 @@ func (wsc *WordSearchClient) StartREST() error {
 	if err != nil {
 		return err
 	}
-
 	return http.ListenAndServe(":8090", mux)
 }
